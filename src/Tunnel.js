@@ -1,7 +1,7 @@
 import { Component } from 'react'
 import PropTypes from 'prop-types'
 import uniqueId from './uniqueId'
-import TunnelContext from './TunnelContext'
+import SlotFillContext from './TunnelContext'
 
 export default class Tunnel extends Component {
   static propTypes = {
@@ -9,7 +9,7 @@ export default class Tunnel extends Component {
     render: PropTypes.func,
   }
 
-  static contextType = TunnelContext
+  static contextType = SlotFillContext
 
   itemId = uniqueId()
 

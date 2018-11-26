@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React, { Component, Fragment } from 'react'
 
-import TunnelContext from './TunnelContext'
+import SlotFillContext from './TunnelContext'
 
 export default class TunnelPlaceholder extends Component {
   static propTypes = {
@@ -15,7 +15,7 @@ export default class TunnelPlaceholder extends Component {
     component: Fragment,
   }
 
-  static contextType = TunnelContext
+  static contextType = SlotFillContext
 
   componentDidMount() {
     const { id } = this.props

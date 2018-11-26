@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 
-import TunnelState from './TunnelState'
-import TunnelContext from './TunnelContext'
+import SlotFillState from './TunnelState'
+import SlotFillContext from './TunnelContext'
 
 export default class TunnelProvider extends Component {
   static propTypes = {
@@ -11,13 +11,13 @@ export default class TunnelProvider extends Component {
 
   render() {
     return (
-      <TunnelContext.Provider
+      <SlotFillContext.Provider
         value={{
-          tunnelState: new TunnelState(),
+          tunnelState: new SlotFillState(),
         }}
       >
         {this.props.children}
-      </TunnelContext.Provider>
+      </SlotFillContext.Provider>
     )
   }
 }
