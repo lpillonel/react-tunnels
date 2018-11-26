@@ -1,7 +1,9 @@
 import PropTypes from 'prop-types'
 import React, { Component, Fragment } from 'react'
 
-class TunnelPlaceholder extends Component {
+import TunnelContext from './TunnelContext'
+
+export default class TunnelPlaceholder extends Component {
   static propTypes = {
     children: PropTypes.func,
     component: PropTypes.oneOfType([PropTypes.node, PropTypes.symbol]),
@@ -13,9 +15,7 @@ class TunnelPlaceholder extends Component {
     component: Fragment,
   }
 
-  static contextTypes = {
-    tunnelState: PropTypes.object,
-  }
+  static contextType = TunnelContext
 
   componentDidMount() {
     const { id } = this.props
@@ -40,6 +40,7 @@ class TunnelPlaceholder extends Component {
       children: renderChildren,
       component: Tag,
       multiple,
+      ...props
     } = this.props
     const tunnelProps = tunnelState.getTunnelProps(id)
 
@@ -55,12 +56,24 @@ class TunnelPlaceholder extends Component {
       }
     }
 
-    if (!tunnelProps) {
+    if (Array.isArray(tunnelProps)) {
+      return (
+        <Tag>
+          {tunnelProps.map((item, i) => {
+            if (typeof item.children === 'function') {
+              return React.cloneElement(item.children(props), { key: i })
+            }
+            return React.cloneElement(item.children, { key: i })
+          })}
+        </Tag>
+      )
+    } else if (tunnelProps) {
+      if (typeof tunnelProps.children === 'function') {
+        return <Tag>{tunnelProps.children(props)}</Tag>
+      }
+      return <Tag>{tunnelProps.children}</Tag>
+    } else {
       return null
     }
-
-    return <Tag>{tunnelProps.children}</Tag>
   }
 }
-
-export default TunnelPlaceholder
